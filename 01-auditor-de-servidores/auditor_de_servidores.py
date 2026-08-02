@@ -145,4 +145,5 @@ def menu():
         except Exception as exc:
             print(f'\nSelecione apenas números inteiros de 1 a 9.\n{exc}\n')
 
+
 menu()
