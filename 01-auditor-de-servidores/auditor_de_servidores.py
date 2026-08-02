@@ -4,9 +4,6 @@ import ipaddress
 servidores = dict()
 servidores_json = dict()
 
-def verificar_servidor(ip):
-    pass
-
 #listar servidores
 def listar_servidores ():
     for i, (chave,valor) in enumerate(servidores.items()):
