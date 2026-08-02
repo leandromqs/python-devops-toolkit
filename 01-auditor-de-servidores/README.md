@@ -46,7 +46,7 @@ Ao salvar os dados, o dicionário é convertido para um arquivo JSON com indenta
 Clone o repositório:
 
 ```bash
-git clone 
+git clone https://github.com/leandromqs/python-devops-toolkit
 ```
 
 Entre na pasta do projeto:
