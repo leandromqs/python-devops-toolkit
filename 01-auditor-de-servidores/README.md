@@ -76,9 +76,3 @@ Este projeto foi desenvolvido para consolidar conhecimentos sobre:
 * Tratamento de exceções (`try` / `except`)
 * Validação de dados
 * Organização de código
-
----
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins de estudo e prática da linguagem Python.
