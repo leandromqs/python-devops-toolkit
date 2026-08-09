@@ -4,9 +4,6 @@ import ipaddress
 servidores = dict()
 servidores_json = dict()
 
-def verificar_servidor(ip):
-    pass
-
 #listar servidores
 def listar_servidores ():
     for i, (chave,valor) in enumerate(servidores.items()):
@@ -147,5 +144,6 @@ def menu():
                 print('\nOpção inválida, são permitidos apenas números de 1 a 9.\n')
         except Exception as exc:
             print(f'\nSelecione apenas números inteiros de 1 a 9.\n{exc}\n')
+
 
 menu()
