@@ -4,18 +4,16 @@ import json
 from datetime import datetime
 
 def definir_horario():
-    data = datetime.now()
-    return data.strftime('%d-%m-%Y %H:%M')
+    return datetime.now().strftime('%d-%m-%Y %H:%M')
 
 def criar_log(eventos):
-    data = datetime.now()
-    data =  data.strftime('%d-%m-%Y')
+    data =  datetime.now().strftime('%d-%m-%Y')
     if not os.path.exists('./logs'):
         os.makedirs('logs')
-        with open(f'./logs/ping-monitor_{data}', 'w') as arquivo:
+        with open(f'./logs/ping-monitor_{data}.log', 'w') as arquivo:
             arquivo.write(eventos)
     else:
-        with open(f'./logs/ping-monitor_{data}', 'a') as arquivo:
+        with open(f'./logs/ping-monitor_{data}.log', 'a') as arquivo:
             arquivo.write(eventos)
 
 def carregar_json() -> dict:
@@ -31,25 +29,27 @@ def carregar_json() -> dict:
     except FileNotFoundError as exc:
         print(f'\nArquivo não encontrado, verifique se você digitou o caminho corretamente.\n{exc}\n')
         raise SystemExit
-    except json.decoder.JSONDecodeError as exc:
+    except json.JSONDecodeError as exc:
         print(f'\nOcorreu um erro com o seu arquivo JSON, verifique-o e tente novamente.\n{exc}\n')
         raise SystemExit
     except Exception as exc:
         print(f'\nOcorreu um erro inesperado.\n{exc}\n')
         raise SystemExit
 
-def pingar_servidores(dicionario: dict):
-    servidores = dicionario
+def pingar_servidores(servidores: dict):
+
+    print('Verificando servidores, aguarde...')
     for nome, ip in servidores.items():
-        print('Verificando servidores, aguarde...')
-        ping = subprocess.run(['ping', f'{ip}'], shell=True, capture_output=True, text=True)
+        parametro = '-n' if os.name == 'nt' else '-c'
+        ping = subprocess.run(['ping', f'{parametro}','2' ,f'{ip}'], capture_output=True, text=True)
+        horario = definir_horario()
         if ping.returncode == 0:
-            print(f'{definir_horario()}      {nome}: {ip}       [ONLINE]')
-            resultado = f'{definir_horario()}      {nome}: {ip}       [ONLINE]\n'
+            print(f'{horario}      {nome}: {ip}       [ONLINE]')
+            resultado = f'{horario}      {nome}: {ip}       [ONLINE]\n'
             criar_log(resultado)
         elif ping.returncode == 1:
-            print(f'{definir_horario()}      {nome}: {ip}       [OFFLINE]')
-            resultado = f'{definir_horario()}      {nome}: {ip}       [OFFLINE]\n'
+            print(f'{horario}      {nome}: {ip}       [OFFLINE]')
+            resultado = f'{horario}      {nome}: {ip}       [OFFLINE]\n'
             criar_log(resultado)
 
 print('\n#### Bem-vindo ao Ping Monitor V1.0 ####')
